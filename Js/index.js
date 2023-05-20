@@ -5,11 +5,9 @@ var width = canvas.width;
 var height = canvas.height;
 var score = 0;
 var gameOver = false;
-var maxFish =10;
-var max = 3
+var maxFish = 10;
 var gameFrames = 0;
 var fishAnimationSpeed = 20;
-var difficulty = 1;
 
 var dory = {
   x: 250,
@@ -20,9 +18,12 @@ var dory = {
   gravity: 2,
   lift: -25,
   image: new Image(),
+  isImageLoaded: false,
+
   update: function() {
     this.y += this.vy;
     this.vy += this.gravity;
+
     if (this.y < 0) {
       this.y = 0;
       this.vy = 0;
@@ -32,38 +33,48 @@ var dory = {
       this.vy = 0;
     }
   },
+
   draw: function() {
-    ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
+    if (this.isImageLoaded) {
+      ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
+    }
   },
+
   flap: function() {
     this.vy += this.lift;
   }
 };
 
-dory.image.src = "../Images/pez_user.png";
+dory.image.onload = function() {
+  dory.isImageLoaded = true;
+};
 
-var fishArray = []; // Arreglo para almacenar todos los peces
+dory.image.src = "../Images/pez_user.png";
 
 var fish = {
   x: width,
   y: Math.random() * (height - 50) + 50,
   w: 70,
   h: 60,
-  vx: -5 * difficulty,
+  vx: -10,
   vy: Math.random() * 10 - 15,
   animate: 0,
   position: 0,
   image: new Image(),
+  isImageLoaded: false,
+
   update: function() {
     this.x += this.vx;
     this.y += this.vy;
+
     if (this.x < -this.w) {
       this.x = width;
       this.y = Math.random() * (height - 50) + 50;
-      this.vx = -5 * difficulty;
+      this.vx = -5;
       this.vy = Math.random() * 10 - 5;
       score++;
     }
+
     if (this.y < 0) {
       this.y = 0;
       this.vy = -this.vy;
@@ -73,28 +84,37 @@ var fish = {
       this.vy = -this.vy;
     }
   },
+
   draw: function() {
-    ctx.drawImage(
-      this.image,
-      (this.animate * 254) / 4,
-      (this.position * 264) / 4,
-      260 / 4,
-      264 / 4,
-      this.x,
-      this.y,
-      this.w,
-      this.h
-    )
+    if (this.isImageLoaded) {
+      ctx.drawImage(
+        this.image,
+        (this.animate * 254) / 4,
+        (this.position * 264) / 4,
+        260 / 4,
+        264 / 4,
+        this.x,
+        this.y,
+        this.w,
+        this.h
+      );
+    }
   }
+};
+
+fish.image.onload = function() {
+  fish.isImageLoaded = true;
 };
 
 fish.image.src = "../Images/Water-Monsters-Pixel-Art-Sprite-Sheet-Pack2-removebg-preview-removebg-preview.png";
 
 function collision(rect1, rect2) {
-  return rect1.x < rect2.x + rect2.w &&
+  return (
+    rect1.x < rect2.x + rect2.w &&
     rect1.x + rect1.w > rect2.x &&
     rect1.y < rect2.y + rect2.h &&
-    rect1.y + rect1.h > rect2.y;
+    rect1.y + rect1.h > rect2.y
+  );
 }
 
 function fishAnimation() {
@@ -107,18 +127,6 @@ function fishAnimation() {
   }
 }
 
-function addFish() {
-  if (fishArray.length < 2) {
-    var newFish = Object.assign({}, fish);
-    newFish.x = width;
-    newFish.y = Math.random() * (height - 50) + 50;
-    newFish.vx = -5 * difficulty;
-    newFish.vy = Math.random() * 10 - 5;
-
-    fishArray.push(newFish);
-  }
-}
-
 function update() {
   ctx.clearRect(0, 0, width, height);
 
@@ -127,11 +135,6 @@ function update() {
 
   fish.update();
   fish.draw();
-
-  fishArray.forEach(function(fish) {
-    fish.update();
-    fish.draw();
-  });
 
   ctx.font = "20px Arial";
   ctx.fillStyle = "black";
@@ -148,15 +151,29 @@ function update() {
     }
     ctx.fillText("Puntaje final: " + score, width / 2 - 120, height / 2 + 50);
   } else {
-    if (score > 0 && score % 5 === 0) {
-      addFish();
-    }
-
     requestAnimationFrame(update);
   }
-
   gameFrames++;
   fishAnimation();
+
+  // Verificar si se deben agregar más peces
+  if (score % 3 === 0 && score > 0 && score !== maxFish && fish.vx > -10) {
+    fish.vx -= 2;
+    if (score < maxFish) {
+      addFish();
+    }
+  }
+}
+
+function addFish() {
+  var newFish = Object.assign({}, fish);
+  newFish.x = width;
+  newFish.y = Math.random() * (height - 50) + 50;
+  newFish.vx = -10;
+  newFish.vy = Math.random() * 10 - 15;
+  newFish.animate = 0;
+  newFish.position = 0;
+  fishArray.push(newFish);
 }
 
 function flap() {
@@ -168,4 +185,5 @@ function flap() {
 document.addEventListener("keydown", flap);
 
 update();
+
 
