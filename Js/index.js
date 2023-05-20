@@ -50,7 +50,7 @@ dory.image.onload = function() {
   dory.isImageLoaded = true;
 };
 
-dory.image.src = 'https://tu-usuario.github.io/tu-repositorio/Images/pez_user.png';
+dory.image.src = '../Images/pez_user.png';
 
 var fish = {
   x: width,
