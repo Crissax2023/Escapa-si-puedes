@@ -1,0 +1,59 @@
+body{margin: 0;}
+
+.Images {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url("/Images/Escapa_wallpaper.png") no-repeat center;
+  background-size: cover;
+}
+
+#boton {
+  position: absolute;
+  top: 95%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #ff9d0093;
+  color: rgb(255, 255, 255);
+  font-size: 25px;
+  padding: 10px 38px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+
+#boton:hover {
+  background: #673f0685;
+  color: rgb(118, 118, 118);
+  padding: 10px 38px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  top: 95%;
+  left: 52%;
+}
+
+.reproductor {
+  margin-top: 35px;
+  margin-left: 55px;
+  padding: 10px 10px;
+  border: 8px solid white;
+  background-color: rgb(249, 170, 0);
+  color: white;
+  font-size: 19px;
+  cursor: pointer;
+  border-radius: 50px;
+
+}
+
+/* Transición suave al cambiar el tamaño */
+.reproductor {
+  transition: transform 0.3s;
+}
+
+/* Tamaño más grande al pasar el cursor */
+.reproductor:hover {
+  transform: scale(1.5);
+}
