@@ -8,6 +8,7 @@ var gameOver = false;
 var maxFish = 10;
 var gameFrames = 0;
 var fishAnimationSpeed = 20;
+var fishArray = []; 
 
 var dory = {
   x: 250,
