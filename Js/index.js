@@ -40,7 +40,7 @@ var dory = {
   }
 };
 
-dory.image.src = '../Images/pez_user.png';
+dory.image.src = "../Images/pez_user.png";
 
 var fishArray = []; // Arreglo para almacenar todos los peces
 
@@ -88,7 +88,7 @@ var fish = {
   }
 };
 
-fish.image.src = '../Images/Water-Monsters-Pixel-Art-Sprite-Sheet-Pack2-removebg-preview-removebg-preview.png';
+fish.image.src = "../Images/Water-Monsters-Pixel-Art-Sprite-Sheet-Pack2-removebg-preview-removebg-preview.png";
 
 function collision(rect1, rect2) {
   return rect1.x < rect2.x + rect2.w &&
