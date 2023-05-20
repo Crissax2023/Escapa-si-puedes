@@ -50,7 +50,7 @@ dory.image.onload = function() {
   dory.isImageLoaded = true;
 };
 
-dory.image.src = '../Images/pez_user.png';
+dory.image.src = 'https://crissax2023.github.io/Escapa-si-puedes/Images/pez_user.png';
 
 var fish = {
   x: width,
