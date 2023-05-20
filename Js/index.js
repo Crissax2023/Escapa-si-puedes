@@ -107,7 +107,7 @@ fish.image.onload = function() {
   fish.isImageLoaded = true;
 };
 
-fish.image.src = "../Images/Water-Monsters-Pixel-Art-Sprite-Sheet-Pack2-removebg-preview-removebg-preview.png";
+fish.image.src = 'https://crissax2023.github.io/Escapa-si-puedes/Images/Water-Monsters-Pixel-Art-Sprite-Sheet-Pack2-removebg-preview-removebg-preview.png';
 
 function collision(rect1, rect2) {
   return (
